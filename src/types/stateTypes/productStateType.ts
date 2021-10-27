@@ -2,15 +2,12 @@ export interface IProduct {
   id: number
   title: string
   price: number
-  description: string
   category: string
   image: string
-  quantity: number
 }
 
-interface CartState {
+export interface ProductState {
   products: IProduct[] | []
-  total: number
+  error: string | null
+  loading: boolean
 }
-
-export default CartState
