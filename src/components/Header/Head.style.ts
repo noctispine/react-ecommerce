@@ -18,16 +18,24 @@ const Header = styled.header`
 
 const Navbar = styled.div`
   margin-right: 10rem;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  
 
   div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 2rem;
+    cursor: pointer;
+    
   }
 
   span {
     color: #dbdbff;
   }
 `
+
 
 export { Header, Navbar }
