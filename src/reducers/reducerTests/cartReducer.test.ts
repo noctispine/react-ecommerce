@@ -19,7 +19,16 @@ test('should handle a product being added to empty cart', () => {
 })
 
 test('should handle a product being added to cart which has same product', () => {
-  const product = {
+  const initialProduct = {
+    id: 1,
+    title: 'Pen',
+    price: 6,
+    description: 'a pen',
+    category: 'Pen',
+    image: '-',
+    quantity: 2,
+  }
+  const newProduct = {
     id: 1,
     title: 'Pen',
     price: 3,
@@ -29,13 +38,15 @@ test('should handle a product being added to cart which has same product', () =>
     quantity: 1,
   }
   const initialState = {
-    products: [product],
-    total: product.price,
+    products: [initialProduct],
+    total: initialProduct.price,
   }
-  console.log('initial state', initialState)
-  const newState = cartReducer(initialState, addToCart(product))
+  const initialQuantity = initialProduct.quantity
+  const initialTotal = initialState.total
+
+  const newState = cartReducer(initialState, addToCart(newProduct))
   expect(newState).toEqual({
-    products: [{ ...product, quantity: 2 }],
-    total: product.price * 2,
+    products: [{ ...initialProduct, quantity: initialQuantity + 1 }],
+    total: initialTotal + newProduct.price,
   })
 })
