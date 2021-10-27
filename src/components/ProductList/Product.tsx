@@ -1,10 +1,39 @@
 import React from 'react'
-import { ProductCard } from './Product.style'
+import { useDispatch, useSelector } from 'react-redux'
+import { ProductCard, ProductWrapper } from './Product.style'
+import { addToCart } from '../../reducers/cartReducer'
+import { IProduct } from '../../types/stateTypes/productStateType'
+import { BiPlus } from 'react-icons/bi'
+import { RootState } from '../../reducers/rootReducer'
 
-interface Props {}
-
-const Product = (props: Props) => {
-  return <ProductCard />
+const Product = (props: IProduct) => {
+  const dispatch = useDispatch()
+  const userState = useSelector((state:RootState) => state.user)
+  const isUserLoggedIn = userState.username !== '' 
+  return (
+    <ProductWrapper>
+      <ProductCard>
+        <div className="product-content-container">
+          <div className="img-container">
+            <img src={props.image} alt={props.title} />
+          </div>
+          <h4>${props.price}</h4>
+          <h3>
+            {props.title.length < 15
+              ? props.title
+              : props.title.slice(0, 15) + '...'}
+          </h3>
+        </div>
+        <div className="button-div-wrapper">
+          <div className="button-div">
+            <button onClick={() => dispatch(addToCart(props))}>
+              <BiPlus size="1.5rem" />
+            </button>
+          </div>
+        </div>
+      </ProductCard>
+    </ProductWrapper>
+  )
 }
 
 export default Product
