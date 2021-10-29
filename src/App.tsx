@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Head from './components/Header/Head'
 import { MainWrapper } from './App.styles'
-import { actionCreators } from './reducers/productReducer'
+import { productActionCreators } from './reducers/productReducer'
 import ProductList from './components/ProductList/ProductList'
 import CartList from './components/Cart/CartList'
 import LoginForm from './components/Forms/LoginForm'
@@ -13,7 +13,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(actionCreators.fetchStart())
+    dispatch(productActionCreators.fetchStart())
   })
 
   const userState = useSelector((state: RootState) => state.user)

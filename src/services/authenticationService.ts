@@ -21,7 +21,7 @@ export function registerApi(username: string, email: string, password: string) {
     },
     body: JSON.stringify({ username, email, password }),
   })
-    .then((response) => response.json)
+    .then((response) => response.json())
     .then((json) => json)
     .catch((error) => console.log(error))
 }

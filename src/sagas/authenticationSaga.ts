@@ -5,8 +5,7 @@ import {
   registerActionCreators,
   registerActions,
 } from '../reducers/registerationReducer'
-import {loginApi, registerApi} from '../services/authenticationService'
-
+import { loginApi, registerApi } from '../services/authenticationService'
 function* logout() {
   yield put(loginActionCreators.userLogoutCreator())
 
@@ -35,15 +34,31 @@ function* loginFlow(username: string, password: string) {
 
 function* registerFlow(username: string, email: string, password: string) {
   try {
-    yield call(registerApi, username, email, password)
-    yield put(registerActionCreators.registerSuccessCreator())
-    const data: { username: string; token: string; error?: string } =
-      yield call(loginApi, username, password)
-    if (!data.error) {
+    const registerApiResponse: { error?: string } = yield call(
+      registerApi,
+      username,
+      email,
+      password
+    )
+    const loginApiResponse: {
+      username: string
+      token: string
+      error?: string
+    } = yield call(loginApi, username, password)
+
+    if (registerApiResponse.error) {
       yield put(
-        loginActionCreators.userLoginSuccessCreator(data.username, data.token)
+        registerActionCreators.registerFailureCreator(registerApiResponse.error)
       )
-      localStorage.setItem('token', JSON.stringify(data.token))
+    } else {
+      yield put(registerActionCreators.registerSuccessCreator())
+      yield put(
+        loginActionCreators.userLoginSuccessCreator(
+          loginApiResponse.username,
+          loginApiResponse.token
+        )
+      )
+      localStorage.setItem('token', JSON.stringify(loginApiResponse.token))
     }
   } catch (error) {
     if (error instanceof Error)
@@ -63,7 +78,6 @@ export function* registerationWatcher(): Generator<any, any, any> {
   while (true) {
     const { payload } = yield take(registerActions.REGISTER_START)
     const { username, email, password } = payload
-    console.log(username, email, password)
     yield fork(registerFlow, username, email, password)
   }
 }

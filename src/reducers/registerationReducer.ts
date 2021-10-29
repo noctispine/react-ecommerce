@@ -37,20 +37,24 @@ const registerationReducer: Reducer<RegisterState, RegisterActions> = (
 }
 
 // Action Creators
-const registerStartCreator: registerStartActionCreator = (username, email, password) => {
-  return { type: REGISTER_START, payload: {username, email, password} }
+const registerStartCreator: registerStartActionCreator = (
+  username,
+  email,
+  password
+) => {
+  return { type: REGISTER_START, payload: { username, email, password } }
 }
 
 const registerFailureCreator: registerFailureActionCreator = (
   error: string
 ) => {
+  console.log(error)
   return { type: REGISTER_FAIL, payload: error }
 }
 
 const registerSuccessCreator: registerSuccessActionCreator = () => {
   return { type: REGISTER_SUCCESS }
 }
-
 
 export const registerActionCreators = {
   registerStartCreator,
