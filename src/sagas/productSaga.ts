@@ -2,7 +2,7 @@ import { call, put, takeEvery, StrictEffect } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import { actions } from '../reducers/productReducer'
 import { IProduct } from '../types/stateTypes/productStateType'
-import { actionCreators } from '../reducers/productReducer'
+import { productActionCreators } from '../reducers/productReducer'
 
 import productsApi from '../services/productApi'
 
@@ -11,10 +11,10 @@ export function* onLoadProducts() {
   try {
     const response: AxiosResponse = yield call(productsApi)
     const data: IProduct[] = response.data
-    yield put(actionCreators.fetchSuccess(data))
+    yield put(productActionCreators.fetchSuccess(data))
   } catch (error) {
     if (error instanceof Error)
-      yield put(actionCreators.fetchFail(error.message))
+      yield put(productActionCreators.fetchFail(error.message))
   }
 }
 // watchers

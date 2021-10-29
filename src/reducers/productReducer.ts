@@ -48,7 +48,7 @@ const fetchFail: actionCreatorTypes.FetchProductsFailCreator = (
   return { type: FETCH_PRODUCTS__FAIL, payload: error }
 }
 
-export const actionCreators = {
+export const productActionCreators = {
   fetchStart,
   fetchSuccess,
   fetchFail,

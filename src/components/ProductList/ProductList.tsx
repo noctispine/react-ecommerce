@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ListWrapper } from './ProductList.style'
 import Product from './Product'
 import { useSelector } from 'react-redux'
