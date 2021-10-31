@@ -8,20 +8,26 @@ import CartAction from '../types/actionTypes/cartActionTypes'
 // Action Creator Types
 import {
   addToCartCreator,
+  fetchItemsFailCreator,
+  fetchItemsStartCreator,
+  fetchItemsSuccessCreator,
   removeFromCartCreator,
-  setStateFromLocalCreator,
 } from '../types/actionCreatorTypes/cartActionCreatorTypes'
 import { IProduct } from '../types/stateTypes/productStateType'
 
 // Actions
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
-const SET_STATE_FROM_LOCAL = 'SET_STATE_FROM_LOCAL'
+const FETCH_ITEMS_START = 'FETCH_ITEMS_START'
+const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS'
+const FETCH_ITEMS_FAIL = 'FETCH_ITEMS_FAIL'
 
 // Initial State
 export const initialState: CartState = {
   products: [],
   total: 0,
+  loading: false,
+  error: null,
 }
 
 // Reducer
@@ -30,13 +36,18 @@ const cartReducer: Reducer<CartState, CartAction> = (
   action
 ) => {
   switch (action.type) {
-    case SET_STATE_FROM_LOCAL: {
-      return {
-        ...state,
-        products: action.payload.products,
-        total: action.payload.total,
-      }
+    case FETCH_ITEMS_START: {
+      return { ...state, loading: true }
     }
+
+    case FETCH_ITEMS_SUCCESS: {
+      return { ...state, products: action.payload, loading: false }
+    }
+
+    case FETCH_ITEMS_FAIL: {
+      return { ...state, loading: false, error: action.payload }
+    }
+
     case ADD_TO_CART: {
       const newState = { ...state }
       newState.total = state.total + action.payload.price
@@ -46,7 +57,7 @@ const cartReducer: Reducer<CartState, CartAction> = (
       const indexOfItem = indexOfObject(newState.products, item)
       if (indexOfItem !== -1) {
         newState.products[indexOfItem].quantity++
-        return { ...state, products: newState.products, total: newState.total}
+        return { ...state, products: newState.products, total: newState.total }
       }
       return {
         ...state,
@@ -91,18 +102,40 @@ export const addToCart: addToCartCreator = (product: IProduct) => {
   }
 }
 
+
 export const removeFromCart: removeFromCartCreator = (id: number) => {
   return { type: REMOVE_FROM_CART, payload: id }
 }
 
-export const setStateFromLocal: setStateFromLocalCreator = (
-  products,
-  total
+export const fetchItemsStart: fetchItemsStartCreator = () => {
+  return { type: FETCH_ITEMS_START }
+}
+
+export const fetchItemsSuccess: fetchItemsSuccessCreator = (
+  items: ICartItem[]
 ) => {
-  return {
-    type: SET_STATE_FROM_LOCAL,
-    payload: { products: products, total: total },
-  }
+  return { type: FETCH_ITEMS_SUCCESS, payload: items }
+}
+
+export const fetchItemsFail: fetchItemsFailCreator = (error: string) => {
+  return { type: 'FETCH_ITEMS_FAIL', payload: error }
+}
+
+export const cartActionCreators = {
+  removeFromCart,
+  addToCart,
+  fetchItemsStart,
+  fetchItemsSuccess,
+  fetchItemsFail,
+}
+
+// Cart Actions
+export const cartActions = {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  FETCH_ITEMS_START,
+  FETCH_ITEMS_SUCCESS,
+  FETCH_ITEMS_FAIL,
 }
 
 export default cartReducer

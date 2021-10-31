@@ -10,14 +10,25 @@ export interface RemoveFromCartAction {
   payload: number
 }
 
-export interface SetStateFromLocalAction {
-  type: 'SET_STATE_FROM_LOCAL'
-  payload: { products: ICartItem[] | []; total: number }
+export interface FetchItemsStartAction {
+  type: 'FETCH_ITEMS_START'
+}
+
+export interface FetchItemsSuccessAction {
+  type: 'FETCH_ITEMS_SUCCESS'
+  payload: ICartItem[]
+}
+
+export interface FetchItemsFailAction {
+  type: 'FETCH_ITEMS_FAIL'
+  payload: string
 }
 
 type CartAction =
   | AddToCartAction
   | RemoveFromCartAction
-  | SetStateFromLocalAction
+  | FetchItemsStartAction
+  | FetchItemsSuccessAction
+  | FetchItemsFailAction
 
 export default CartAction

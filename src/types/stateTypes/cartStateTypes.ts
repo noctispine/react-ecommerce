@@ -7,6 +7,8 @@ export interface ICartItem extends IProduct {
 interface CartState {
   products: ICartItem[] | []
   total: number
+  loading: boolean
+  error: string | null
 }
 
 export default CartState
