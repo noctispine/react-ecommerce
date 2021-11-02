@@ -47,10 +47,19 @@ export const PlaceholderLoadingCard = styled.div`
   flex-direction: column;
   justify-content: center;
   border: 1px solid #eaecef;
-  height: 250px;
+  height: 10rem;
   padding: 1%;
+  width: 85%;
   background-color: white;
   box-shadow: 2px 5px 5px 1px lightgrey;
+
+  @media (max-width: 768px) {
+    width: 50%;
+  }
+
+  @media (max-width: 1200px) {
+    width: 60%;
+  }
 
   .img-container {
     width: 70%;
