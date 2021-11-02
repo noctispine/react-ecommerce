@@ -51,7 +51,7 @@ const Head = ({
   return (
     <Header>
       <div>
-        <h1>getir</h1>
+        <h1>bring it</h1>
         <Navbar>
           <LoginBar />
         </Navbar>
