@@ -15,7 +15,8 @@ export type removeFromCartCreator = (id: number) => RemoveFromCartAction
 export type fetchItemsStartCreator = () => FetchItemsStartAction
 
 export type fetchItemsSuccessCreator = (
-  items: ICartItem[]
+  items: ICartItem[],
+  total: number
 ) => FetchItemsSuccessAction
 
 export type fetchItemsFailCreator = (error: string) => FetchItemsFailAction

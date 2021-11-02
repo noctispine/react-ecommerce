@@ -14,6 +14,7 @@ import {
   removeFromCartCreator,
 } from '../types/actionCreatorTypes/cartActionCreatorTypes'
 import { IProduct } from '../types/stateTypes/productStateType'
+import { PlaylistAddOutlined } from '@material-ui/icons'
 
 // Actions
 const ADD_TO_CART = 'ADD_TO_CART'
@@ -41,7 +42,12 @@ const cartReducer: Reducer<CartState, CartAction> = (
     }
 
     case FETCH_ITEMS_SUCCESS: {
-      return { ...state, products: action.payload, loading: false }
+      return {
+        ...state,
+        products: action.payload.items,
+        loading: false,
+        total: action.payload.total,
+      }
     }
 
     case FETCH_ITEMS_FAIL: {
@@ -88,20 +94,21 @@ const cartReducer: Reducer<CartState, CartAction> = (
       return state
     }
 
+
+
     default: {
       return state
     }
   }
 }
 // Action Creators
-export const addToCart: addToCartCreator = (product: IProduct) => {
-  const newCartProduct: ICartItem = { ...product, quantity: 1 }
+export const addToCart: addToCartCreator = (product: IProduct, quantity:number = 1) => {
+  const newCartProduct: ICartItem = { ...product, quantity }
   return {
     type: ADD_TO_CART,
     payload: newCartProduct,
   }
 }
-
 
 export const removeFromCart: removeFromCartCreator = (id: number) => {
   return { type: REMOVE_FROM_CART, payload: id }
@@ -112,9 +119,10 @@ export const fetchItemsStart: fetchItemsStartCreator = () => {
 }
 
 export const fetchItemsSuccess: fetchItemsSuccessCreator = (
-  items: ICartItem[]
+  items: ICartItem[],
+  total: number
 ) => {
-  return { type: FETCH_ITEMS_SUCCESS, payload: items }
+  return { type: FETCH_ITEMS_SUCCESS, payload: { items, total } }
 }
 
 export const fetchItemsFail: fetchItemsFailCreator = (error: string) => {

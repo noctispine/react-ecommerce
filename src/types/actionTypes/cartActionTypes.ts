@@ -16,7 +16,7 @@ export interface FetchItemsStartAction {
 
 export interface FetchItemsSuccessAction {
   type: 'FETCH_ITEMS_SUCCESS'
-  payload: ICartItem[]
+  payload: { items: ICartItem[]; total: number }
 }
 
 export interface FetchItemsFailAction {

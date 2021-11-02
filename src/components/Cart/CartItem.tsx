@@ -1,8 +1,10 @@
-import React from 'react'
 import { ItemCard } from './Cart.styles'
 import { BiX } from 'react-icons/bi'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeFromCart } from '../../reducers/cartReducer'
+import { RootState } from '../../reducers/rootReducer'
+import UserState from '../../types/stateTypes/userStateType'
+import { Dispatch, SetStateAction } from 'react'
 
 interface CartItemProps {
   id: number
@@ -13,8 +15,10 @@ interface CartItemProps {
 }
 
 const CartItem = (props: CartItemProps) => {
+
   const dispatch = useDispatch()
 
+ 
   return (
     <ItemCard>
       <div className="item-wrapper">

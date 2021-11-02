@@ -1,11 +1,15 @@
 import { call, put, take, takeEvery } from '@redux-saga/core/effects'
-import { addToCartPost, removeFromCartPost } from '../services/cartService'
 import {
-  addToCart,
+  addToCartPost,
+  removeFromCartPost,
+  fetchCart,
+} from '../services/cartService'
+import {
   cartActions,
   cartActionCreators,
 } from '../reducers/cartReducer'
 import { fork } from 'redux-saga/effects'
+import { ICartItem } from '../types/stateTypes/cartStateTypes'
 
 function* addToCartFlow(
   productId: number,
@@ -44,6 +48,30 @@ function* removeFromCartFlow(productId: number) {
   }
 }
 
+function* onLoadCart(): Generator<any, any, any> {
+  const token: string | null = localStorage.getItem('token')
+  try {
+    if (token) {
+      const data: { cartItems: ICartItem[]; cartTotal: number } = yield call(
+        fetchCart,
+        token
+      )
+
+      console.log('cart onloadCart >> ', data.cartItems)
+      yield put(
+        cartActionCreators.fetchItemsSuccess(data.cartItems, data.cartTotal)
+      )
+    } else {
+      yield put(cartActionCreators.fetchItemsFail('token invalid'))
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message)
+      yield put(cartActionCreators.fetchItemsFail(error.message))
+    }
+  }
+}
+
 export function* addToCartWatcher(): Generator<any, any, any> {
   while (true) {
     const { payload } = yield take(cartActions.ADD_TO_CART)
@@ -56,4 +84,8 @@ export function* removeFromCartWatcher(): Generator<any, any, any> {
     const { payload } = yield take(cartActions.REMOVE_FROM_CART)
     yield fork(removeFromCartFlow, payload)
   }
+}
+
+export function* fetchCartWatcher(): Generator<any, any, any> {
+  yield takeEvery(cartActions.FETCH_ITEMS_START, onLoadCart)
 }

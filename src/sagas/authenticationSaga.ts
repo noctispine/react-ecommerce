@@ -10,6 +10,7 @@ function* logout() {
   yield put(loginActionCreators.userLogoutCreator())
 
   localStorage.removeItem('token')
+  localStorage.removeItem('token')
 }
 
 function* loginFlow(username: string, password: string) {
@@ -22,6 +23,7 @@ function* loginFlow(username: string, password: string) {
         loginActionCreators.userLoginSuccessCreator(data.username, data.token)
       )
       localStorage.setItem('token', JSON.stringify(data.token))
+      localStorage.setItem('username', JSON.stringify(data.username))
       return data.token
     } else {
       yield put(loginActionCreators.userLoginFailureCreator(data.error))
