@@ -8,18 +8,34 @@ import CartList from './components/Cart/CartList'
 import LoginForm from './components/Forms/LoginForm'
 import { RootState } from './reducers/rootReducer'
 import SignUpForm from './components/Forms/SignUpForm'
+import { cartActionCreators } from './reducers/cartReducer'
+import { loginActionCreators } from './reducers/userReducer'
 
 const App = () => {
   const dispatch = useDispatch()
 
+  // fetching products
   useEffect(() => {
     dispatch(productActionCreators.fetchStart())
-  })
+  }, [])
 
   const userState = useSelector((state: RootState) => state.user)
   const isUserLoggedIn = userState.username !== ''
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false)
   const [showSignUpForm, setShowSignUpForm] = useState<boolean>(false)
+
+  // fetching cart items
+  useEffect(() => {
+    dispatch(cartActionCreators.fetchItemsStart())
+  }, [isUserLoggedIn])
+
+  // log in if user already logged in once
+  useEffect(() => {
+    const token: string | null = localStorage.getItem('token')
+    const username: string | null = localStorage.getItem('username')
+    if (token && username)
+      dispatch(loginActionCreators.userLoginSuccessCreator(username, token))
+  }, [])
 
   const handleCloseForms = () => {
     setShowLoginForm(false)
@@ -42,7 +58,7 @@ const App = () => {
       >
         <div>filters</div>
         <ProductList />
-        <CartList />
+        <CartList setShowLoginForm={setShowLoginForm} />
       </MainWrapper>
     </>
   )
