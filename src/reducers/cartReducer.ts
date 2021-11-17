@@ -12,9 +12,9 @@ import {
   fetchItemsStartCreator,
   fetchItemsSuccessCreator,
   removeFromCartCreator,
+  resetCartCreator,
 } from '../types/actionCreatorTypes/cartActionCreatorTypes'
 import { IProduct } from '../types/stateTypes/productStateType'
-import { PlaylistAddOutlined } from '@material-ui/icons'
 
 // Actions
 const ADD_TO_CART = 'ADD_TO_CART'
@@ -22,6 +22,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const FETCH_ITEMS_START = 'FETCH_ITEMS_START'
 const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS'
 const FETCH_ITEMS_FAIL = 'FETCH_ITEMS_FAIL'
+const RESET_CART = 'RESET_CART'
 
 // Initial State
 export const initialState: CartState = {
@@ -93,8 +94,9 @@ const cartReducer: Reducer<CartState, CartAction> = (
       }
       return state
     }
-
-
+    case RESET_CART: {
+      return initialState
+    }
 
     default: {
       return state
@@ -102,7 +104,10 @@ const cartReducer: Reducer<CartState, CartAction> = (
   }
 }
 // Action Creators
-export const addToCart: addToCartCreator = (product: IProduct, quantity:number = 1) => {
+export const addToCart: addToCartCreator = (
+  product: IProduct,
+  quantity: number = 1
+) => {
   const newCartProduct: ICartItem = { ...product, quantity }
   return {
     type: ADD_TO_CART,
@@ -110,23 +115,27 @@ export const addToCart: addToCartCreator = (product: IProduct, quantity:number =
   }
 }
 
-export const removeFromCart: removeFromCartCreator = (id: number) => {
+const removeFromCart: removeFromCartCreator = (id: number) => {
   return { type: REMOVE_FROM_CART, payload: id }
 }
 
-export const fetchItemsStart: fetchItemsStartCreator = () => {
+const fetchItemsStart: fetchItemsStartCreator = () => {
   return { type: FETCH_ITEMS_START }
 }
 
-export const fetchItemsSuccess: fetchItemsSuccessCreator = (
+const fetchItemsSuccess: fetchItemsSuccessCreator = (
   items: ICartItem[],
   total: number
 ) => {
   return { type: FETCH_ITEMS_SUCCESS, payload: { items, total } }
 }
 
-export const fetchItemsFail: fetchItemsFailCreator = (error: string) => {
+const fetchItemsFail: fetchItemsFailCreator = (error: string) => {
   return { type: 'FETCH_ITEMS_FAIL', payload: error }
+}
+
+const resetCart: resetCartCreator = () => {
+  return { type: 'RESET_CART' }
 }
 
 export const cartActionCreators = {
@@ -135,6 +144,7 @@ export const cartActionCreators = {
   fetchItemsStart,
   fetchItemsSuccess,
   fetchItemsFail,
+  resetCart,
 }
 
 // Cart Actions

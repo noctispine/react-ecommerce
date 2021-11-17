@@ -1,17 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import CartItem from './CartItem'
 import { CartListWrapper, CartTitle } from './Cart.styles'
 import { RootState } from '../../reducers/rootReducer'
-import CartState, { ICartItem } from '../../types/stateTypes/cartStateTypes'
-import {  useSelector } from 'react-redux'
-import { cartActionCreators } from '../../reducers/cartReducer'
+import CartState from '../../types/stateTypes/cartStateTypes'
+import { useSelector } from 'react-redux'
 
-interface Props {
-  setShowLoginForm: Dispatch<SetStateAction<boolean>>
-}
 
-const CartList = ({ setShowLoginForm }: Props) => {
-
+const CartList = () => {
   const cart: CartState = useSelector((state: RootState) => state.cart)
 
   return (

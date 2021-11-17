@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { ListWrapper } from './ProductList.style'
 import Product from './Product'
 import { useSelector } from 'react-redux'
@@ -7,9 +7,7 @@ import { ProductState, IProduct } from '../../types/stateTypes/productStateType'
 import Pagination from './Pagination'
 import PlaceholderProduct from './PlaceholderProduct'
 
-interface Props {}
-
-const ProductList = (props: Props) => {
+const ProductList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const pageSize = 12
   const productState: ProductState = useSelector(
@@ -17,6 +15,8 @@ const ProductList = (props: Props) => {
   )
   const products = productState.products
   const isLoading = productState.loading
+
+  // show login form
 
   // creating enough placeholder cards for loading
   let placeholderProducts: any = []

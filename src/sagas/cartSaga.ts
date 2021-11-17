@@ -57,7 +57,6 @@ function* onLoadCart(): Generator<any, any, any> {
         token
       )
 
-      console.log('cart onloadCart >> ', data.cartItems)
       yield put(
         cartActionCreators.fetchItemsSuccess(data.cartItems, data.cartTotal)
       )

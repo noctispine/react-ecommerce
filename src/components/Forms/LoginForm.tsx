@@ -1,4 +1,3 @@
-import React, { Dispatch, SetStateAction } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginActionCreators } from '../../reducers/userReducer'
 import UserState from '../../types/stateTypes/userStateType'

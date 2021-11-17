@@ -1,15 +1,12 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ProductCard, ProductWrapper } from './Product.style'
 import { addToCart } from '../../reducers/cartReducer'
 import { IProduct } from '../../types/stateTypes/productStateType'
 import { BiPlus } from 'react-icons/bi'
-import { RootState } from '../../reducers/rootReducer'
 
 const Product = (props: IProduct) => {
   const dispatch = useDispatch()
-  const userState = useSelector((state:RootState) => state.user)
-  const isUserLoggedIn = userState.username !== '' 
+
   return (
     <ProductWrapper>
       <ProductCard>

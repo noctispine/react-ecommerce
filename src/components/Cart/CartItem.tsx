@@ -1,10 +1,7 @@
 import { ItemCard } from './Cart.styles'
 import { BiX } from 'react-icons/bi'
-import { useDispatch, useSelector } from 'react-redux'
-import { removeFromCart } from '../../reducers/cartReducer'
-import { RootState } from '../../reducers/rootReducer'
-import UserState from '../../types/stateTypes/userStateType'
-import { Dispatch, SetStateAction } from 'react'
+import { useDispatch } from 'react-redux'
+import { cartActionCreators } from '../../reducers/cartReducer'
 
 interface CartItemProps {
   id: number
@@ -15,10 +12,8 @@ interface CartItemProps {
 }
 
 const CartItem = (props: CartItemProps) => {
-
   const dispatch = useDispatch()
 
- 
   return (
     <ItemCard>
       <div className="item-wrapper">
@@ -35,7 +30,9 @@ const CartItem = (props: CartItemProps) => {
         </div>
       </div>
       <div className="button-div">
-        <button onClick={() => dispatch(removeFromCart(props.id))}>
+        <button
+          onClick={() => dispatch(cartActionCreators.removeFromCart(props.id))}
+        >
           <BiX size="2rem" />
         </button>
       </div>
