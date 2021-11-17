@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const fetchCart = async (token: string) => {
   return fetch('/cart', {
     method: 'GET',
