@@ -24,11 +24,16 @@ export interface FetchItemsFailAction {
   payload: string
 }
 
+export interface ResetCartAction {
+  type: 'RESET_CART'
+}
+
 type CartAction =
   | AddToCartAction
   | RemoveFromCartAction
   | FetchItemsStartAction
   | FetchItemsSuccessAction
   | FetchItemsFailAction
+  | ResetCartAction
 
 export default CartAction

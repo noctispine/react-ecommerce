@@ -5,6 +5,7 @@ import { MdLogout } from 'react-icons/md'
 import { RiUserAddFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { loginActionCreators } from '../../reducers/userReducer'
+import { cartActionCreators } from '../../reducers/cartReducer'
 
 interface Props {
   isUserLoggedIn: boolean
@@ -22,6 +23,7 @@ const Head = ({
   const LoginBar = () => {
     const handleLogout = () => {
       dispatch(loginActionCreators.userLogoutCreator())
+      dispatch(cartActionCreators.resetCart())
       setShowLoginForm(false)
       setShowSignUpForm(false)
     }
