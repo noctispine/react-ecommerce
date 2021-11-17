@@ -1,5 +1,5 @@
 import { IProduct } from '../stateTypes/productStateType'
-import { actions } from '../../reducers/productReducer'
+import { productActions } from '../../reducers/productReducer'
 
 export interface FetchProductsStartAction {
   type: 'FETCH_PRODUCTS_START'

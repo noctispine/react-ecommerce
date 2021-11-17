@@ -54,7 +54,7 @@ export const productActionCreators = {
   fetchFail,
 }
 
-export const actions = {
+export const productActions = {
   FETCH_PRODUCTS_START,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS__FAIL,
