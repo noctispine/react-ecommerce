@@ -6,11 +6,10 @@ import {
   registerActions,
 } from '../reducers/registerationReducer'
 import { loginApi, registerApi } from '../services/authenticationService'
-function* logout() {
-  yield put(loginActionCreators.userLogoutCreator())
 
-  localStorage.removeItem('token')
-  localStorage.removeItem('token')
+function* logout() {
+  console.log('hey')
+  yield put(loginActionCreators.userLogoutCreator())
 }
 
 function* loginFlow(username: string, password: string) {
