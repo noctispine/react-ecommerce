@@ -17,11 +17,16 @@ export const PaginationItem = styled.li<PaginationItemProps>`
   pointer-events: ${(props) => (props.disabled ? 'none' : '')};
   cursor: pointer;
   transform: ${(props) => (props.selected ? 'scale(1.1)' : '')};
+
+  @media (max-width: 768px){
+    min-width: .5rem;
+    min-height: .5rem;
+  }
 `
 export const PaginationWrapper = styled.div`
-  margin-top: 2rem;
-  grid-column: span 3 / span 3;
-  margin: 0 auto;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
 `
 export const PaginationUl = styled.ul`
   display: flex;

@@ -1,4 +1,3 @@
-import { Input } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { filterActionCreators } from '../reducers/filterReducer'
@@ -25,10 +24,12 @@ const Category = ({ category }: Props) => {
   }
   return (
     <CategoryCard isChecked={checked} onClick={handleCheck}>
-      <TiTick className="tick" />
-      <input type="checkbox" checked={checked} value={category.category} />
-      <label>{category.category}</label>
-      <span>( {category.count} )</span>
+      <div>
+        <TiTick className="tick" />
+        <input type="checkbox" checked={checked} value={category.category} />
+        <label>{category.category}</label>
+        <span>( {category.count} )</span>
+      </div>
     </CategoryCard>
   )
 }

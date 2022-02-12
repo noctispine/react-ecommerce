@@ -4,10 +4,7 @@ import {
   removeFromCartPost,
   fetchCart,
 } from '../services/cartService'
-import {
-  cartActions,
-  cartActionCreators,
-} from '../reducers/cartReducer'
+import { cartActions, cartActionCreators } from '../reducers/cartReducer'
 import { fork } from 'redux-saga/effects'
 import { ICartItem } from '../types/stateTypes/cartStateTypes'
 
@@ -18,7 +15,7 @@ function* addToCartFlow(
   const token: string | null = localStorage.getItem('token')
   try {
     if (token) {
-      const data: { newProduct: number; newTotal: number; error?: string } =
+      const newCart: { newProduct: number; newTotal: number; error?: string } =
         yield call(addToCartPost, token, productId, quantity)
     } else {
       console.log('user has to be logged in to add item')
@@ -32,7 +29,7 @@ function* removeFromCartFlow(productId: number) {
   const token: string | null = localStorage.getItem('token')
   try {
     if (token) {
-      const data: {
+      const newCart: {
         newProduct: number
         newTotal: number
         quantity: number
@@ -52,14 +49,17 @@ function* onLoadCart(): Generator<any, any, any> {
   const token: string | null = localStorage.getItem('token')
   try {
     if (token) {
-      const data: { cartItems: ICartItem[]; cartTotal: number } = yield call(
-        fetchCart,
-        token
-      )
+      const data: {
+        cartItems: ICartItem[]
+        cartTotal: number
+        error?: string
+      } = yield call(fetchCart, token)
 
-      yield put(
-        cartActionCreators.fetchItemsSuccess(data.cartItems, data.cartTotal)
-      )
+      if (!data.error) {
+        yield put(
+          cartActionCreators.fetchItemsSuccess(data.cartItems, data.cartTotal)
+        )
+      }
     } else {
       yield put(cartActionCreators.fetchItemsFail('token invalid'))
     }

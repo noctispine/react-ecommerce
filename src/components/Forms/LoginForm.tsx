@@ -3,13 +3,23 @@ import { loginActionCreators } from '../../reducers/userReducer'
 import UserState from '../../types/stateTypes/userStateType'
 import { RootState } from '../../reducers/rootReducer'
 import { FormWrapper } from './LoginForm.styles'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
+import { Dispatch, SetStateAction } from 'react'
 
-interface Props {}
+interface Props {
+  setShowLoginForm: Dispatch<SetStateAction<boolean>>
+  setShowSignUpForm: Dispatch<SetStateAction<boolean>>
+}
 
-const LoginForm = (props: Props) => {
+const LoginForm = ({ setShowLoginForm, setShowSignUpForm }: Props) => {
   const dispatch = useDispatch()
   const state: UserState = useSelector((state: RootState) => state.user)
   const error = state.error
+
+  const handleRouteToRegisterForm = () => {
+    setShowLoginForm(false)
+    setShowSignUpForm(true)
+  }
 
   const handleLogin = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -26,15 +36,24 @@ const LoginForm = (props: Props) => {
   }
   return (
     <FormWrapper>
+      <div onClick={() => setShowLoginForm(false)} className="exit-button">
+        <AiOutlineCloseCircle size="2rem" />
+      </div>
       <form onSubmit={handleLogin}>
         {error && <p id="error">{error}</p>}
         <input type="username" name="username" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
-        <div>
+        <div className="form-button">
           <button>Login</button>
         </div>
       </form>
-      <p id="direct-register">Don't have an account? Register here</p>
+      <p id="direct-register">
+        <span id="question">Don't have an account?</span>
+
+        <span onClick={handleRouteToRegisterForm} id="register">
+          Register here
+        </span>
+      </p>
     </FormWrapper>
   )
 }

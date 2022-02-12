@@ -6,6 +6,7 @@ import {
   userLoginFailureActionCreator,
   userLoginSuccessActionCreator,
   userLogoutActionCreator,
+  userReloginStartActionCreator
 } from '../types/actionCreatorTypes/userActionCreators'
 
 const initialState: UserState = {
@@ -20,6 +21,7 @@ const USER_LOGIN_START = 'USER_LOGIN_START'
 const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
 const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE'
 const USER_LOGOUT = 'USER_LOGOUT'
+const USER_RELOGIN_START = 'USER_RELOGIN_START'
 
 const userReducer: Reducer<UserState, UserLoginActions> = (
   state = initialState,
@@ -78,7 +80,13 @@ const userLoginFailureCreator: userLoginFailureActionCreator = (
 }
 
 const userLogoutCreator: userLogoutActionCreator = () => {
+  localStorage.clear()
   return { type: USER_LOGOUT }
+}
+
+const userReloginStartCreator: userReloginStartActionCreator = (username: string, token: string) => {
+  
+  return {type: USER_RELOGIN_START, payload: {username, token}}
 }
 
 export const loginActions = {
@@ -86,6 +94,7 @@ export const loginActions = {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGOUT,
+  USER_RELOGIN_START
 }
 
 export const loginActionCreators = {
@@ -93,6 +102,7 @@ export const loginActionCreators = {
   userLoginSuccessCreator,
   userLoginFailureCreator,
   userLogoutCreator,
+  userReloginStartCreator
 }
 
 export default userReducer

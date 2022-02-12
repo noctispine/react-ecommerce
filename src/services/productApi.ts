@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { ICategory } from '../types/stateTypes/filterStateTypes'
-
 const productsApi = async (filterList: string[] = []) => {
   if (!filterList.length) return await axios.get(`/products`)
   let str: string = '['

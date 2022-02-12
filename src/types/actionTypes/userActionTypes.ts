@@ -21,8 +21,17 @@ export interface UserLogoutAction {
   type: 'USER_LOGOUT'
 }
 
+export interface UserReloginStartAction {
+  type: 'USER_RELOGIN_START'
+  payload: {
+    username: string
+    token: string
+  }
+}
+
 export type UserLoginActions =
   | UserLoginStartAction
   | UserLoginSuccessAction
   | UserLoginFailureAction
   | UserLogoutAction
+  | UserReloginStartAction

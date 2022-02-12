@@ -5,30 +5,30 @@ interface CategoryCardProps {
 }
 
 export const CategoryCard = styled.div<CategoryCardProps>`
-  margin: 1.5rem 0.3rem;
-  height: 1.4rem;
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  padding-left: 2rem;
-  border-radius: 3rem;
+  border-radius: 1rem;
+  font-weight: bolder;
+
+  margin: 0 .2rem;
+  padding: 0.2rem;
   border: ${(props) =>
-    props.isChecked ? 'blue 5px solid' : 'white 5px solid'};
+    props.isChecked ? 'blue 3px solid' : 'transparent 3px solid'};
   span {
-    margin-left: 0.5rem;
-    font-size: 1.1rem;
   }
 
   label {
-    font-size: 1.3rem;
-    margin-left: 0.5rem;
   }
 
   input {
     display: none;
   }
 
+  div {
+    width: max-content;
+    display: flex;
+    align-items: center;
+  }
+
   .tick {
-    /* display: ${(props) => (props.isChecked ? 'inline-block' : 'none')}; */
     color: ${(props) => (props.isChecked ? 'black' : 'white')};
   }
 `

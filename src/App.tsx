@@ -17,17 +17,22 @@ const App = () => {
   const dispatch = useDispatch()
   const userState = useSelector((state: RootState) => state.user)
   const filterState = useSelector((state: RootState) => state.filter)
-  
-  // fetching products
-  useEffect(() => {
-    if (filterState.activeCategories.length > 0) dispatch(filterActionCreators.fetchFilterStartCreator(filterState.activeCategories))
-    else dispatch(productActionCreators.fetchStart())
-  }, [filterState.activeCategories])
-
 
   const isUserLoggedIn = userState.username !== ''
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false)
   const [showSignUpForm, setShowSignUpForm] = useState<boolean>(false)
+  const [showSideCart, setShowSideCart] = useState<boolean>(false)
+
+  // fetching products
+  useEffect(() => {
+    if (filterState.activeCategories.length > 0)
+      dispatch(
+        filterActionCreators.fetchFilterStartCreator(
+          filterState.activeCategories
+        )
+      )
+    else dispatch(productActionCreators.fetchStart())
+  }, [filterState.activeCategories])
 
   // fetching cart items
   useEffect(() => {
@@ -39,7 +44,7 @@ const App = () => {
     const token: string | null = localStorage.getItem('token')
     const username: string | null = localStorage.getItem('username')
     if (token && username)
-      dispatch(loginActionCreators.userLoginSuccessCreator(username, token))
+      dispatch(loginActionCreators.userReloginStartCreator(username, token))
   }, [])
 
   const handleCloseForms = () => {
@@ -53,17 +58,32 @@ const App = () => {
         isUserLoggedIn={isUserLoggedIn}
         setShowLoginForm={setShowLoginForm}
         setShowSignUpForm={setShowSignUpForm}
+        setShowSideCart={setShowSideCart}
+        showSideCart={showSideCart}
       />
-      {showLoginForm && !isUserLoggedIn && <LoginForm />}
-      {showSignUpForm && !isUserLoggedIn && <SignUpForm />}
+      {showLoginForm && !isUserLoggedIn && (
+        <LoginForm
+          setShowLoginForm={setShowLoginForm}
+          setShowSignUpForm={setShowSignUpForm}
+        />
+      )}
+      {showSignUpForm && !isUserLoggedIn && (
+        <SignUpForm
+          setShowLoginForm={setShowLoginForm}
+          setShowSignUpForm={setShowSignUpForm}
+        />
+      )}
 
       <MainWrapper
         onClick={() => handleCloseForms()}
-        showLoginForm={(showLoginForm || showSignUpForm) && !isUserLoggedIn}
+        blackBg={(showLoginForm || showSignUpForm) && !isUserLoggedIn}
       >
         <FilterSection />
         <ProductList />
-        <CartList />
+        <CartList
+          showSideCart={showSideCart}
+          setShowSideCart={setShowSideCart}
+        />
       </MainWrapper>
     </>
   )

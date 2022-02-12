@@ -8,6 +8,7 @@ export const ProductCard = styled.article`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   padding: 0 1rem 3rem 1rem;
+
   .product-content-container {
     width: 100%;
     height: 100%;
@@ -17,7 +18,7 @@ export const ProductCard = styled.article`
   .img-container {
     width: 60%;
     height: 60%;
-    padding: 2rem 2rem 1rem 2rem;
+    padding: 1rem 1rem 1rem 1rem;
     display: flex;
     margin: 0 auto;
     img {
@@ -41,24 +42,38 @@ export const ProductCard = styled.article`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    width: 7rem;
+    height: 5rem;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 0.75rem;
+    width: 8rem;
+    height: 6rem;
+  }
 `
 export const PlaceholderLoadingCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   border: 1px solid #eaecef;
-  height: 10rem;
+  height: 12rem;
+  width: 8rem;
   padding: 1%;
-  width: 85%;
   background-color: white;
   box-shadow: 2px 5px 5px 1px lightgrey;
 
   @media (max-width: 768px) {
-    width: 50%;
+    height: 7rem;
+    width: 5rem;
   }
 
   @media (max-width: 1200px) {
-    width: 60%;
+    height: 8rem;
+    width: 6rem;
   }
 
   .img-container {

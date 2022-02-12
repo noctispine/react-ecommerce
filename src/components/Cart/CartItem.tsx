@@ -21,11 +21,14 @@ const CartItem = (props: CartItemProps) => {
           <img src={props.image} alt={props.title} />
         </div>
         <div className="item-content">
-          <h4>
-            {props.title.length < 20
-              ? props.title
-              : props.title.slice(0, 15) + '...'}
-          </h4>
+          <div className="item-details">
+            <h4>
+              {props.title.length < 20
+                ? props.title
+                : props.title.slice(0, 15) + '...'}
+            </h4>
+            <p>quantity: {props.quantity}</p>
+          </div>
           <p>${(props.quantity * props.price).toFixed(2)}</p>
         </div>
       </div>

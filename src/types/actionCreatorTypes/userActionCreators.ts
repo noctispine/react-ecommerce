@@ -3,6 +3,7 @@ import {
   UserLoginSuccessAction,
   UserLoginFailureAction,
   UserLogoutAction,
+  UserReloginStartAction
 } from '../actionTypes/userActionTypes'
 
 export type userLoginStartActionCreator = (
@@ -18,5 +19,10 @@ export type userLoginSuccessActionCreator = (
 export type userLoginFailureActionCreator = (
   error: string
 ) => UserLoginFailureAction
+
+export type userReloginStartActionCreator = (
+  username: string,
+  token: string
+) => UserReloginStartAction
 
 export type userLogoutActionCreator = () => UserLogoutAction

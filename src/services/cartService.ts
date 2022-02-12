@@ -8,7 +8,6 @@ export const fetchCart = async (token: string) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json)
       return json
     })
     .catch((err) => {
